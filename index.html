@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WF Todo · Cross-Session</title>
+<style>
+:root {
+  --pink: #ff3366;
+  --navy: #0a1628;
+  --cream: #faf7f2;
+  --line: #e5e0d8;
+  --grey: #6b6b6b;
+  --green: #2ea043;
+  --amber: #d97706;
+  --red: #dc2626;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  line-height: 1.5;
+  font-size: 14px;
+}
+header {
+  background: var(--navy);
+  color: white;
+  padding: 22px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .left .eyebrow { color: var(--pink); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
+header h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: 28px; font-weight: 400; margin-top: 4px; }
+header h1 em { color: var(--pink); font-style: italic; }
+header .meta { font-size: 12px; color: rgba(255,255,255,0.6); text-align: right; }
+header .meta a { color: rgba(255,255,255,0.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
+.toolbar {
+  background: white;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 32px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.toolbar .label { font-size: 11px; color: var(--grey); margin-right: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+.filter-btn {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  color: var(--navy);
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.filter-btn:hover { background: var(--line); }
+.filter-btn.active { background: var(--navy); color: white; border-color: var(--navy); }
+.filter-btn .count { opacity: 0.6; margin-left: 4px; font-size: 11px; }
+.filter-btn.active .count { opacity: 1; }
+.wrap { padding: 24px 32px 80px; max-width: 1400px; margin: 0 auto; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+thead th {
+  text-align: left;
+  padding: 12px 14px;
+  background: var(--navy);
+  color: white;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+tbody td { padding: 14px; border-top: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover { background: rgba(255, 51, 102, 0.02); }
+tbody tr.hidden { display: none; }
+.id { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--grey); width: 60px; }
+.title .t { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.title .ctx { font-size: 12.5px; color: var(--grey); line-height: 1.45; }
+.title .notes { font-size: 11.5px; color: var(--grey); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); font-style: italic; }
+.human { font-size: 12px; color: var(--navy); width: 90px; }
+.meta { width: 130px; font-size: 11px; color: var(--grey); }
+.meta .updated { margin-top: 4px; font-size: 10.5px; opacity: 0.75; }
+.pill { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.p-P0 { background: #fee2e2; color: var(--red); }
+.p-P1 { background: #fef3c7; color: var(--amber); }
+.p-P2 { background: #dbeafe; color: #2563eb; }
+.s-todo { background: #f3f4f6; color: #4b5563; }
+.s-doing { background: #fef3c7; color: var(--amber); }
+.s-review { background: #fce7f3; color: #be185d; }
+.s-pending { background: #ddd6fe; color: #6d28d9; }
+.s-blocked { background: #fee2e2; color: var(--red); }
+.s-done { background: #d1fae5; color: var(--green); }
+.s-removed { background: #e5e7eb; color: var(--grey); }
+.p-session { background: var(--navy); color: white; }
+.empty { text-align: center; padding: 80px 20px; color: var(--grey); }
+.empty h3 { font-family: 'Instrument Serif', serif; font-size: 28px; font-weight: 400; color: var(--navy); margin-bottom: 8px; }
+footer { padding: 30px 32px; text-align: center; color: var(--grey); font-size: 11px; }
+footer a { color: var(--pink); text-decoration: none; }
+@media (max-width: 800px) {
+  .meta, .human, .id { display: none; }
+  header { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="left">
+    <div class="eyebrow">WorldFirst Social Ops</div>
+    <h1>Cross-Session <em>Todo</em></h1>
+  </div>
+  <div class="meta">
+    <div>7 active · 18 archived</div>
+    <div>Generated 2026-05-07 21:12</div>
+    <div><a href="https://drive.google.com/open?id=1arjAiQOCFghLX-yUIi41yzxWejTki2ac" target="_blank">edit sheet →</a></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <span class="label">Filter</span>
+  <button class="filter-btn active" data-filter-session="all">All <span class="count">7</span></button>
+  <button class="filter-btn" data-filter-session="Planning">Planning <span class="count">2</span></button><button class="filter-btn" data-filter-session="Pipeline">Pipeline <span class="count">2</span></button><button class="filter-btn" data-filter-session="Distribution">Distribution <span class="count">2</span></button><button class="filter-btn" data-filter-session="DesignSystem">DesignSystem <span class="count">1</span></button>
+</div>
+
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Pri</th>
+        <th>Status</th>
+        <th>Session</th>
+        <th>Human</th>
+        <th>Task</th>
+        <th>Due / Updated</th>
+      </tr>
+    </thead>
+    <tbody id="rows">
+      
+    <tr data-session="Planning" data-status="pending" data-priority="P0">
+      <td class="id">T-001</td>
+      <td><span class="pill p-P0">P0</span></td>
+      <td><span class="pill s-pending">pending</span></td>
+      <td><span class="pill p-session">Planning</span></td>
+      <td class="human">Steven</td>
+      <td class="title">
+        <div class="t">Review + finalize Q2 PR Application</div>
+        <div class="ctx">Drafted at ~/Documents/Claude/q2_pr_application/PR_Q2_2026_draft.html (5/6). Application.html + index.html also built. Decide: what to submit, when, to whom.</div>
+        <div class="notes">Steven's part done. Awaiting external review. Process out of his hands. This is the 'PR budget application' from your todo list. Already drafted, just needs your finalization.</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    <tr data-session="Planning" data-status="doing" data-priority="P1">
+      <td class="id">T-023</td>
+      <td><span class="pill p-P1">P1</span></td>
+      <td><span class="pill s-doing">doing</span></td>
+      <td><span class="pill p-session">Planning</span></td>
+      <td class="human">Steven</td>
+      <td class="title">
+        <div class="t">Regional manager outreach + comms checklist</div>
+        <div class="ctx">Vietnam (Tal) done. Still need to reach Malaysia marketing manager, Turkey team, long-tail team. Standardize a checklist so each region gets the same brief.</div>
+        <div class="notes">Set up regional cadence — content needs, KOL pipeline, localization asks.</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    <tr data-session="Distribution" data-status="todo" data-priority="P1">
+      <td class="id">T-011</td>
+      <td><span class="pill p-P1">P1</span></td>
+      <td><span class="pill s-todo">todo</span></td>
+      <td><span class="pill p-session">Distribution</span></td>
+      <td class="human">unassigned</td>
+      <td class="title">
+        <div class="t">Kick off CSM + CSN distribution program</div>
+        <div class="ctx">Reframed from 'audit'. We haven't actually launched distribution for the China Sourcing Map or the China Sourcing Navigator. Plan + execute the distribution play, not the audit.</div>
+        <div class="notes">Pair with T-012 (single-page download plan). This is the actual work, audit is downstream. From inbox 2026-02-25, still genuinely open.</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    <tr data-session="Distribution" data-status="todo" data-priority="P1">
+      <td class="id">T-012</td>
+      <td><span class="pill p-P1">P1</span></td>
+      <td><span class="pill s-todo">todo</span></td>
+      <td><span class="pill p-session">Distribution</span></td>
+      <td class="human">Steven</td>
+      <td class="title">
+        <div class="t">CSM single-page download distribution plan</div>
+        <div class="ctx">Post-Canton refocus. Target 10K+ downloads. CTAs from China-sourcing content + tailored paid push. Q2 brand budget audit.</div>
+        <div class="notes">Part of T-011 distribution kickoff. Pair with T-003 review — likely already partially scoped in Q2 social plan.</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    <tr data-session="Pipeline" data-status="todo" data-priority="P1">
+      <td class="id">T-013</td>
+      <td><span class="pill p-P1">P1</span></td>
+      <td><span class="pill s-todo">todo</span></td>
+      <td><span class="pill p-session">Pipeline</span></td>
+      <td class="human">Steven</td>
+      <td class="title">
+        <div class="t">1688 content briefs (3): What is / How to connect / Sourcing advantage</div>
+        <div class="ctx">Use /wf_content_foundation per brief. Send to influencers in priority regions to test. Independent of upper funnel work.</div>
+        <div class="notes">Confirmed by Steven as a real todo, not system.</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    <tr data-session="DesignSystem" data-status="todo" data-priority="P1">
+      <td class="id">T-022</td>
+      <td><span class="pill p-P1">P1</span></td>
+      <td><span class="pill s-todo">todo</span></td>
+      <td><span class="pill p-session">DesignSystem</span></td>
+      <td class="human">Steven</td>
+      <td class="title">
+        <div class="t">Explore Claude Design + GPT image gen as next-level creative pipeline</div>
+        <div class="ctx">Unlocks Apple-grade brand sizzle for motion graphics by combining AI key frames (hero card shots, iPhone-in-hand, atmospheric environments) with Remotion code overlays (UI, text, transitions). Same unlock drives higher-quality static images for posts, carousels, thumbnails.</div>
+        <div class="notes">World Card x Apple Pay v2 capped at CSS rendering limits — photoreal lighting/glass/hands/materials need AI image gen. Workflow to test: Steven generates 3-4 key frames in GPT/Claude Design with shot-list prompts, drops to ~/Downloads or ~/Documents/Claude/wf-launch-video/public/imports/, Claude Code picks them up and animates around them (Ken Burns, parallax, fades, animated UI/text/NFC overlays on top of static plates). First test: redo World Card x Apple Pay v2 with AI plates + Remotion overlays. Related: T-016 (broader 'what is Claude design' scoping).</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    <tr data-session="Pipeline" data-status="todo" data-priority="P1">
+      <td class="id">T-024</td>
+      <td><span class="pill p-P1">P1</span></td>
+      <td><span class="pill s-todo">todo</span></td>
+      <td><span class="pill p-session">Pipeline</span></td>
+      <td class="human">Steven</td>
+      <td class="title">
+        <div class="t">Production mode kickoff — scripts + videos</div>
+        <div class="ctx">We technically haven't been in production mode for new scripts/videos beyond Canton + Trendsetter. Need to actually start producing.</div>
+        <div class="notes">Belongs under Pipeline system but worth highlighting as discrete kickoff.</div>
+      </td>
+      <td class="meta">
+        <div>—</div>
+        <div class="updated">2026-05-07 · Planning</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  Auto-regenerated from <a href="https://drive.google.com/open?id=1arjAiQOCFghLX-yUIi41yzxWejTki2ac">Todo.xlsx</a>
+  · Protocol at <code>gdrive:Distribution/CROSS_SESSION_TODO_PROTOCOL.md</code>
+  · 7 sessions report here
+</footer>
+
+<script>
+const buttons = document.querySelectorAll('.filter-btn');
+const rows = document.querySelectorAll('#rows tr[data-session]');
+buttons.forEach(btn => btn.addEventListener('click', () => {
+  buttons.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filterSession;
+  rows.forEach(r => {
+    r.classList.toggle('hidden', f !== 'all' && r.dataset.session !== f);
+  });
+}));
+</script>
+
+</body>
+</html>
