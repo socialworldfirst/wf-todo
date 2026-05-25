@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WF Todo · Cross-Session</title>
+<title>This Week's Goal · May 25 — May 31, 2026</title>
 <style>
 :root {
   --pink: #ff3366;
@@ -21,339 +21,260 @@ body {
   background: var(--cream);
   color: var(--navy);
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 15px;
+  padding: 48px 24px 80px;
 }
+.wrap { max-width: 760px; margin: 0 auto; }
 header {
-  background: var(--navy);
-  color: white;
-  padding: 22px 32px;
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 24px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-header .left .eyebrow { color: var(--pink); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; }
-header h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: 28px; font-weight: 400; margin-top: 4px; }
-header h1 em { color: var(--pink); font-style: italic; }
-header .meta { font-size: 12px; color: rgba(255,255,255,0.6); text-align: right; }
-header .meta a { color: rgba(255,255,255,0.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
-.toolbar {
-  background: white;
-  border-bottom: 1px solid var(--line);
-  padding: 12px 32px;
-  display: flex;
-  gap: 8px;
+  align-items: flex-end;
   flex-wrap: wrap;
-  align-items: center;
+  gap: 12px;
 }
-.toolbar .label { font-size: 11px; color: var(--grey); margin-right: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
-.filter-btn {
-  background: var(--cream);
-  border: 1px solid var(--line);
-  color: var(--navy);
-  padding: 6px 12px;
-  font-size: 12px;
-  border-radius: 100px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.15s;
-}
-.filter-btn:hover { background: var(--line); }
-.filter-btn.active { background: var(--navy); color: white; border-color: var(--navy); }
-.filter-btn .count { opacity: 0.6; margin-left: 4px; font-size: 11px; }
-.filter-btn.active .count { opacity: 1; }
-.wrap { padding: 24px 32px 80px; max-width: 1400px; margin: 0 auto; }
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-thead th {
-  text-align: left;
-  padding: 12px 14px;
-  background: var(--navy);
-  color: white;
+.eyebrow {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.2em;
+  color: var(--pink);
   font-weight: 600;
+  margin-bottom: 6px;
 }
-tbody td { padding: 14px; border-top: 1px solid var(--line); vertical-align: top; }
-tbody tr:hover { background: rgba(255, 51, 102, 0.02); }
-tbody tr.hidden { display: none; }
-.id { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--grey); width: 60px; }
-.title .t { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
-.title .ctx { font-size: 12.5px; color: var(--grey); line-height: 1.45; }
-.title .notes { font-size: 11.5px; color: var(--grey); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); font-style: italic; }
-.human { font-size: 12px; color: var(--navy); width: 90px; }
-.meta { width: 130px; font-size: 11px; color: var(--grey); }
-.meta .updated { margin-top: 4px; font-size: 10.5px; opacity: 0.75; }
-.pill { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
-.p-P0 { background: #fee2e2; color: var(--red); }
-.p-P1 { background: #fef3c7; color: var(--amber); }
-.p-P2 { background: #dbeafe; color: #2563eb; }
-.s-todo { background: #f3f4f6; color: #4b5563; }
+h1 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 46px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+h1 em { color: var(--pink); font-style: italic; }
+.meta { text-align: right; font-size: 12px; color: var(--grey); }
+.meta a { color: var(--pink); text-decoration: none; border-bottom: 1px solid transparent; }
+.meta a:hover { border-bottom-color: var(--pink); }
+section { margin-bottom: 36px; }
+h2 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  border-left: 3px solid var(--pink);
+  padding-left: 12px;
+}
+.opt {
+  color: var(--pink);
+  font-size: 20px;
+  font-style: italic;
+  margin-left: 4px;
+}
+ul.items { list-style: none; }
+li.item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.15s;
+}
+li.item:hover {
+  border-color: var(--pink);
+  transform: translateX(2px);
+}
+li.done { opacity: 0.5; }
+li.done .title { text-decoration: line-through; }
+.check {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+  margin-top: 3px;
+  background: var(--cream);
+}
+li.done .check { background: var(--green); border-color: var(--green); position: relative; }
+li.done .check::after {
+  content: "✓";
+  position: absolute;
+  top: -3px;
+  left: 2px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+}
+.body { flex: 1; }
+.title { font-weight: 600; font-size: 15px; line-height: 1.35; }
+.ctx { font-size: 13px; color: var(--grey); margin-top: 4px; line-height: 1.45; }
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-left: 6px;
+  vertical-align: middle;
+}
 .s-doing { background: #fef3c7; color: var(--amber); }
 .s-review { background: #fce7f3; color: #be185d; }
 .s-pending { background: #ddd6fe; color: #6d28d9; }
 .s-blocked { background: #fee2e2; color: var(--red); }
 .s-done { background: #d1fae5; color: var(--green); }
-.s-removed { background: #e5e7eb; color: var(--grey); }
-.p-session { background: var(--navy); color: white; }
-.empty { text-align: center; padding: 80px 20px; color: var(--grey); }
-.empty h3 { font-family: 'Instrument Serif', serif; font-size: 28px; font-weight: 400; color: var(--navy); margin-bottom: 8px; }
-footer { padding: 30px 32px; text-align: center; color: var(--grey); font-size: 11px; }
+footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--grey);
+  font-size: 11px;
+  text-align: center;
+}
 footer a { color: var(--pink); text-decoration: none; }
-@media (max-width: 800px) {
-  .meta, .human, .id { display: none; }
-  header { flex-direction: column; align-items: flex-start; gap: 8px; }
+.legend {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--grey);
+}
+@media (max-width: 600px) {
+  body { padding: 28px 16px 60px; }
+  h1 { font-size: 34px; }
+  header { flex-direction: column; align-items: flex-start; }
+  .meta { text-align: left; }
 }
 </style>
 </head>
 <body>
+<div class="wrap">
 
 <header>
-  <div class="left">
-    <div class="eyebrow">WorldFirst Social Ops</div>
-    <h1>Cross-Session <em>Todo</em></h1>
+  <div>
+    <div class="eyebrow">This Week's Goal</div>
+    <h1>Week of <em>May 25 — May 31, 2026</em></h1>
+    <div class="legend">12 goals · <span class="opt">*</span> = optional</div>
   </div>
   <div class="meta">
-    <div>12 active · 36 archived</div>
-    <div>Generated 2026-05-25 12:27</div>
+    <div>Generated 2026-05-25 12:29</div>
     <div><a href="https://drive.google.com/open?id=1arjAiQOCFghLX-yUIi41yzxWejTki2ac" target="_blank">edit sheet →</a></div>
   </div>
 </header>
 
-<div class="toolbar">
-  <span class="label">Filter</span>
-  <button class="filter-btn active" data-filter-session="all">All <span class="count">12</span></button>
-  <button class="filter-btn" data-filter-session="Planning">Planning <span class="count">6</span></button><button class="filter-btn" data-filter-session="Pipeline">Pipeline <span class="count">3</span></button><button class="filter-btn" data-filter-session="Distribution">Distribution <span class="count">1</span></button><button class="filter-btn" data-filter-session="Influencer">Influencer <span class="count">2</span></button>
-</div>
 
-<div class="wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Pri</th>
-        <th>Status</th>
-        <th>Session</th>
-        <th>Human</th>
-        <th>Task</th>
-        <th>Due / Updated</th>
-      </tr>
-    </thead>
-    <tbody id="rows">
-      
-    <tr data-session="Distribution" data-status="todo" data-priority="P1">
-      <td class="id">T-037</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Distribution</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">China Sourcing Map — Redistribution</div>
-        <div class="ctx">Single-page download push. CSM gets distribution this week.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Pipeline" data-status="todo" data-priority="P1">
-      <td class="id">T-040</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Pipeline</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">3 MY Killer Reels (Weekly)</div>
-        <div class="ctx">Production target. 3 killer reels per week aimed at Malaysia. Weekly cadence.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Pipeline" data-status="todo" data-priority="P1">
-      <td class="id">T-041</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Pipeline</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">China Sourcing Map: City Deep Dive (Long-Form)</div>
-        <div class="ctx">Next CSN city long-form. Likely Shenzhen Episode 2 per pipeline.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Pipeline" data-status="todo" data-priority="P1">
-      <td class="id">T-042</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Pipeline</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Thai Facebook Reels / operation</div>
-        <div class="ctx">Thai market — Facebook reels + ongoing operation setup.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Planning" data-status="todo" data-priority="P1">
-      <td class="id">T-038</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Planning</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Social Infra: The Viral Trend</div>
-        <div class="ctx">Infra project for catching + riding viral trends on the social side.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Planning" data-status="todo" data-priority="P1">
-      <td class="id">T-039</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Planning</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Social Infra: The Social Touch</div>
-        <div class="ctx">Infra project — the human/Touch layer of social. Build the system.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Planning" data-status="todo" data-priority="P1">
-      <td class="id">T-043</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Planning</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Full funnel: Pure Upper</div>
-        <div class="ctx">Top of the upper funnel. Awareness-only, no product. Define the play.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Planning" data-status="todo" data-priority="P1">
-      <td class="id">T-044</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Planning</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Full funnel: Awareness (Problem → Solution → Product)</div>
-        <div class="ctx">Awareness-tier flow. Problem identification → solution framing → product introduction.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Planning" data-status="todo" data-priority="P1">
-      <td class="id">T-045</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Planning</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Full funnel: Bottom (Tutorial / Trust+Proof / Comparison / Incentive)</div>
-        <div class="ctx">Bottom-funnel content stack: tutorials, trust/proof, competitor comparison, incentive offers.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Planning" data-status="todo" data-priority="P1">
-      <td class="id">T-048</td>
-      <td><span class="pill p-P1">P1</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Planning</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Reimbursement</div>
-        <div class="ctx">Personal admin — submit reimbursement.</div>
-        
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Influencer" data-status="todo" data-priority="P2">
-      <td class="id">T-046</td>
-      <td><span class="pill p-P2">P2</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Influencer</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Build an agentic Influencer pipeline</div>
-        <div class="ctx">Optional this week (*). End-to-end agentic system for influencer ops.</div>
-        <div class="notes">OPTIONAL THIS WEEK (* in Steven's list)</div>
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    <tr data-session="Influencer" data-status="todo" data-priority="P2">
-      <td class="id">T-047</td>
-      <td><span class="pill p-P2">P2</span></td>
-      <td><span class="pill s-todo">todo</span></td>
-      <td><span class="pill p-session">Influencer</span></td>
-      <td class="human">Steven</td>
-      <td class="title">
-        <div class="t">Overseas Chinese Influencer Push</div>
-        <div class="ctx">Optional this week (*). Activation for overseas Chinese KOLs.</div>
-        <div class="notes">OPTIONAL THIS WEEK (* in Steven's list)</div>
-      </td>
-      <td class="meta">
-        <div>—</div>
-        <div class="updated">2026-05-25 · Planning</div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+    <section>
+      <h2>CSM Redistribution </h2>
+      <ul class="items">
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Single-page download push, CTA across all China-sourcing content </div>
+            <div class="ctx">Single-page download push. CSM gets distribution this week.</div>
+          </div>
+        </li></ul>
+    </section>
+    <section>
+      <h2>Social Infra Project </h2>
+      <ul class="items">
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">The Viral Trend </div>
+            <div class="ctx">Infra project for catching + riding viral trends on the social side.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">The Social Touch </div>
+            <div class="ctx">Infra project — the human/Touch layer of social. Build the system.</div>
+          </div>
+        </li></ul>
+    </section>
+    <section>
+      <h2>Content Production </h2>
+      <ul class="items">
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">3 MY Killer Reels (Weekly) </div>
+            <div class="ctx">Production target. 3 killer reels per week aimed at Malaysia. Weekly cadence.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">China Sourcing Map: City Deep Dive (Long-Form) </div>
+            <div class="ctx">Next CSN city long-form. Likely Shenzhen Episode 2 per pipeline.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Thai Facebook Reels / operation </div>
+            <div class="ctx">Thai market — Facebook reels + ongoing operation setup.</div>
+          </div>
+        </li></ul>
+    </section>
+    <section>
+      <h2>Full Social Funnel &amp; Journey </h2>
+      <ul class="items">
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Pure Upper </div>
+            <div class="ctx">Top of the upper funnel. Awareness-only, no product. Define the play.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Awareness (Problem → Solution → Product) </div>
+            <div class="ctx">Awareness-tier flow. Problem identification → solution framing → product introduction.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Bottom (Tutorial / Trust+Proof / Comparison / Incentive) </div>
+            <div class="ctx">Bottom-funnel content stack: tutorials, trust/proof, competitor comparison, incentive offers.</div>
+          </div>
+        </li></ul>
+    </section>
+    <section>
+      <h2>Influencer Push <span class="opt">*</span></h2>
+      <ul class="items">
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Build an agentic Influencer pipeline </div>
+            <div class="ctx">Optional this week (*). End-to-end agentic system for influencer ops.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Overseas Chinese Influencer Push </div>
+            <div class="ctx">Optional this week (*). Activation for overseas Chinese KOLs.</div>
+          </div>
+        </li></ul>
+    </section>
+    <section>
+      <h2>Reimbursement </h2>
+      <ul class="items">
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Reimbursement </div>
+            <div class="ctx">Personal admin — submit reimbursement.</div>
+          </div>
+        </li></ul>
+    </section>
 
 <footer>
   Auto-regenerated from <a href="https://drive.google.com/open?id=1arjAiQOCFghLX-yUIi41yzxWejTki2ac">Todo.xlsx</a>
-  · Protocol at <code>gdrive:Distribution/CROSS_SESSION_TODO_PROTOCOL.md</code>
-  · 7 sessions report here
 </footer>
 
-<script>
-const buttons = document.querySelectorAll('.filter-btn');
-const rows = document.querySelectorAll('#rows tr[data-session]');
-buttons.forEach(btn => btn.addEventListener('click', () => {
-  buttons.forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const f = btn.dataset.filterSession;
-  rows.forEach(r => {
-    r.classList.toggle('hidden', f !== 'all' && r.dataset.session !== f);
-  });
-}));
-</script>
-
+</div>
 </body>
 </html>
