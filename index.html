@@ -119,6 +119,8 @@ li.done .check::after {
   margin-left: 6px;
   vertical-align: middle;
 }
+.p-secondary { background: #e5e7eb; color: var(--grey); }
+.p-primary { background: var(--pink); color: white; }
 .s-doing { background: #fef3c7; color: var(--amber); }
 .s-review { background: #fce7f3; color: #be185d; }
 .s-pending { background: #ddd6fe; color: #6d28d9; }
@@ -138,6 +140,46 @@ footer a { color: var(--pink); text-decoration: none; }
   font-size: 11px;
   color: var(--grey);
 }
+.major-goal-section {
+  background: var(--navy);
+  color: white;
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.major-goal-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--pink);
+}
+.major-eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--pink);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.major-goal { margin-bottom: 14px; }
+.major-goal:last-child { margin-bottom: 0; }
+.major-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 400;
+}
+.major-ctx {
+  margin-top: 6px;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+}
 @media (max-width: 600px) {
   body { padding: 28px 16px 60px; }
   h1 { font-size: 34px; }
@@ -156,10 +198,15 @@ footer a { color: var(--pink); text-decoration: none; }
     <div class="legend">10 goals · <span class="opt">*</span> = optional</div>
   </div>
   <div class="meta">
-    <div>Generated 2026-05-25 12:32</div>
+    <div>Generated 2026-05-26 13:25</div>
     <div><a href="https://drive.google.com/open?id=1arjAiQOCFghLX-yUIi41yzxWejTki2ac" target="_blank">edit sheet →</a></div>
   </div>
 </header>
+
+<section class="major-goal-section">
+  <div class="major-eyebrow">Major Goal</div>
+  <div class="major-goal"><div class="major-title">Align Q2 OKRs (July + August)</div><div class="major-ctx">Major goal sitting above this week's work. Align Q2 OKRs covering July + August. Define what success looks like for the back half.</div></div>
+</section>
 
 
     <section>
@@ -197,8 +244,8 @@ footer a { color: var(--pink); text-decoration: none; }
         <li class="item ">
           <span class="check"></span>
           <div class="body">
-            <div class="title">3 MY Killer Reels (Weekly) </div>
-            <div class="ctx">Production target. 3 killer reels per week aimed at Malaysia. Weekly cadence.</div>
+            <div class="title">3 Southeast Asia Killer Reels (Weekly) </div>
+            <div class="ctx">Production target: 3 killer reels per week, Southeast Asia focus (not Malaysia primarily). Weekly cadence.</div>
           </div>
         </li>
         <li class="item ">
@@ -206,13 +253,6 @@ footer a { color: var(--pink); text-decoration: none; }
           <div class="body">
             <div class="title">China Sourcing Map: City Deep Dive (Long-Form) </div>
             <div class="ctx">Next CSN city long-form. Likely Shenzhen Episode 2 per pipeline.</div>
-          </div>
-        </li>
-        <li class="item ">
-          <span class="check"></span>
-          <div class="body">
-            <div class="title">Thai Facebook Reels / operation </div>
-            <div class="ctx">Thai market — Facebook reels + ongoing operation setup.</div>
           </div>
         </li></ul>
     </section>
@@ -222,15 +262,22 @@ footer a { color: var(--pink); text-decoration: none; }
         <li class="item ">
           <span class="check"></span>
           <div class="body">
-            <div class="title">Build an agentic Influencer pipeline </div>
+            <div class="title">Build an agentic Influencer pipeline <span class="pill p-secondary">secondary</span></div>
             <div class="ctx">Optional this week (*). End-to-end agentic system for influencer ops.</div>
           </div>
         </li>
         <li class="item ">
           <span class="check"></span>
           <div class="body">
-            <div class="title">Overseas Chinese Influencer Push </div>
+            <div class="title">Overseas Chinese Influencer Push <span class="pill p-secondary">secondary</span></div>
             <div class="ctx">Optional this week (*). Activation for overseas Chinese KOLs.</div>
+          </div>
+        </li>
+        <li class="item ">
+          <span class="check"></span>
+          <div class="body">
+            <div class="title">Malaysia influencer agency talks — vendor search <span class="pill p-primary">primary</span><span class="pill s-doing">doing</span></div>
+            <div class="ctx">Currently in talks with Malaysia influencer agencies. Goal this week: search + lock vendors. PRIMARY influencer focus.</div>
           </div>
         </li></ul>
     </section>
